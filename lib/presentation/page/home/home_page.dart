@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shopping_app/presentation/page/cart/cart_page.dart';
-import 'package:shopping_app/presentation/page/home/product_list_page.dart';
+
+import '../product/product_list_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -22,10 +23,9 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       body: IndexedStack(index: currentPage, children: pages),
       bottomNavigationBar: BottomNavigationBar(
-        iconSize: 40,
-        
-        selectedFontSize: 24,
-        unselectedFontSize: 20,
+        iconSize: 24,
+        selectedFontSize: 14,
+        unselectedFontSize: 10,
         onTap: (value) {
           setState(() {
             currentPage = value;

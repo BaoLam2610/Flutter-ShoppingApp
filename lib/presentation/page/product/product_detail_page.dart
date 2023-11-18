@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:shopping_app/presentation/page/cart/cart_provider.dart';
 
 class ProductDetailPage extends StatefulWidget {
   final Map<String, Object> product;
@@ -25,11 +27,11 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
         //   },
         // ),
       ),
-      body: _productDetailBody(context),
+      body: _productDetailBody(),
     );
   }
 
-  Widget _productDetailBody(BuildContext context) {
+  Widget _productDetailBody() {
     return Column(
       children: [
         const SizedBox(height: 20),
@@ -96,7 +98,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
             padding: const EdgeInsets.all(20.0),
             child: ElevatedButton.icon(
                 icon: const Icon(Icons.shopping_cart),
-                onPressed: () {},
+                onPressed: addToCartListener,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Theme.of(context).colorScheme.primary,
                   foregroundColor: Colors.redAccent,
@@ -111,6 +113,32 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
         ],
       ),
     );
+  }
+
+  void addToCartListener() {
+    if (selectedSize == 0) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Please select a size!'),
+        ),
+      );
+      return;
+    }
+    Provider.of<CartProvider>(context, listen: false).addProduct(
+      {
+        'id': widget.product['id'],
+        'title': widget.product['title'],
+        'price': widget.product['price'],
+        'imageUrl': widget.product['imageUrl'],
+        'company': widget.product['company'],
+        'size': selectedSize,
+      },
+    );
+    ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Product added successfully!'),
+        ),
+      );
   }
 
   List<int> _productSize() {

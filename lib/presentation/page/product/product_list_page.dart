@@ -29,6 +29,7 @@ class _ProductListPageState extends State<ProductListPage> {
   Widget _homeBody() {
     return Column(
       children: [
+        const SizedBox(height: 20),
         _searchBarSection(),
         _chipSection(),
         _productSection(),
